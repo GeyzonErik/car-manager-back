@@ -12,7 +12,11 @@ export const createUserRoutes = (
     guard.canActivate.bind(guard),
     controller.detailUser.bind(controller)
   );
-  router.patch("/users/:id", controller.updateUser.bind(controller));
+  router.patch(
+    "/users/:id",
+    guard.canActivate.bind(guard),
+    controller.updateUser.bind(controller)
+  );
 
   return router;
 };
