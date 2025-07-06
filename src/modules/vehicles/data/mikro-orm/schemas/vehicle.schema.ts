@@ -38,4 +38,11 @@ export class VehicleSchema {
     onUpdate: () => new Date(),
   })
   updatedAt: Date = new Date();
+
+  @Property({
+    name: "deleted_at",
+    type: "timestamp",
+    nullable: true,
+  })
+  deletedAt?: Date | null;
 }

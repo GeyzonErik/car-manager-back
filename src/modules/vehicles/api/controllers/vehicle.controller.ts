@@ -23,6 +23,9 @@ import {
 import { ToggleActiveVehiclePresenter } from "../presenter/toggle-vehicle.presenter";
 import { GetVehicleStatusSummaryUseCase } from "@/vehicles/application/usecases/get-vehicle-status-summary.usecase";
 import { GetVehicleStatusSummaryPresenter } from "../presenter/get-vehicle-status-summary.presenter";
+import { DeleteVehicleUseCase } from "@/vehicles/application/usecases/delete-vehicle.usecase";
+import { DeleteVehicleParams } from "../requests/delete-vehucle.request";
+import { DeleteVehiclePresenter } from "../presenter/delete-vehicle.presenter";
 
 export class VehicleController {
   constructor(
@@ -31,7 +34,8 @@ export class VehicleController {
     private readonly listVehicleUseCase: ListVehicleUseCase,
     private readonly getVehicleStatusSummaryUseCase: GetVehicleStatusSummaryUseCase,
     private readonly updateVehicleUseCase: UpdateVehicleUseCase,
-    private readonly toggleActiveVehicleUseCase: ToggleActiveVehicleUseCase
+    private readonly toggleActiveVehicleUseCase: ToggleActiveVehicleUseCase,
+    private readonly deleteVehicleUseCase: DeleteVehicleUseCase
   ) {}
 
   async createVehicle(
@@ -162,6 +166,26 @@ export class VehicleController {
       return res
         .status(200)
         .send(ToggleActiveVehiclePresenter.toHTTP(req.body.active));
+    } catch (err) {
+      if (err instanceof Error && err.name === "NotFoundError") {
+        return res.status(404).json({ message: err.message });
+      }
+
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async deleteVehicle(
+    req: Request<DeleteVehicleParams, unknown, unknown>,
+    res: Response
+  ) {
+    try {
+      await this.deleteVehicleUseCase.execute({
+        vehicleId: req.params.id,
+      });
+
+      return res.status(200).json(DeleteVehiclePresenter.toHTTP());
     } catch (err) {
       if (err instanceof Error && err.name === "NotFoundError") {
         return res.status(404).json({ message: err.message });

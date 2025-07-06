@@ -23,6 +23,7 @@ export class VehiclePgRepository implements IVehicleRepository {
 
     const where: Record<string, any> = {
       owner: data.ownerId,
+      deletedAt: null,
     };
 
     if (data.active !== undefined) {
@@ -47,6 +48,7 @@ export class VehiclePgRepository implements IVehicleRepository {
   async findById(data: { id: string }): Promise<Vehicle | null> {
     const vehicleSchema = await this.entityManager.findOne(VehicleSchema, {
       id: data.id,
+      deletedAt: null,
     });
 
     if (!vehicleSchema) {
@@ -63,13 +65,16 @@ export class VehiclePgRepository implements IVehicleRepository {
       this.entityManager.count(VehicleSchema, {
         owner: data.ownerId,
         active: true,
+        deletedAt: null,
       }),
       this.entityManager.count(VehicleSchema, {
         owner: data.ownerId,
         active: false,
+        deletedAt: null,
       }),
       this.entityManager.count(VehicleSchema, {
         owner: data.ownerId,
+        deletedAt: null,
       }),
     ]);
 
@@ -103,7 +108,11 @@ export class VehiclePgRepository implements IVehicleRepository {
         throw new NotFoundError(`Vehicle with id ${data.id} not found`);
       }
 
-      await em.nativeDelete(VehicleSchema, { id: data.id });
+      await em.nativeUpdate(
+        VehicleSchema,
+        { id: data.id },
+        { deletedAt: new Date() }
+      );
     });
   }
 }

@@ -43,5 +43,11 @@ export const createVehicleRoutes = (
     controller.toggleVehicleActive.bind(controller)
   );
 
+  router.delete(
+    "/vehicles/:id",
+    guard.canActivate.bind(guard),
+    controller.deleteVehicle.bind(controller)
+  );
+
   return router;
 };

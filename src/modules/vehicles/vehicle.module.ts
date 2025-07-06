@@ -14,6 +14,7 @@ import { ToggleActiveVehicleUseCase } from "./application/usecases/toggle-vehicl
 import { ListVehicleLogUseCase } from "./application/usecases/list-vehicle-log.usecase";
 import { VehicleHistoryController } from "./api/controllers/vehicle-history.controller";
 import { GetVehicleStatusSummaryUseCase } from "./application/usecases/get-vehicle-status-summary.usecase";
+import { DeleteVehicleUseCase } from "./application/usecases/delete-vehicle.usecase";
 
 export interface VehicleModuleDependencies {
   vehicleController: VehicleController;
@@ -50,6 +51,7 @@ export const createVehicleModule = (
     vehicleRepository,
     vehicleLogRepository
   );
+  const deleteVehicleUseCase = new DeleteVehicleUseCase(vehicleRepository);
   const listVehicleLogUseCase = new ListVehicleLogUseCase(vehicleLogRepository);
 
   // Controllers
@@ -59,7 +61,8 @@ export const createVehicleModule = (
     listVehicleUseCase,
     getVehicleStatusSummaryUseCase,
     updateVehicleUseCase,
-    toggleActiveVehicleUseCase
+    toggleActiveVehicleUseCase,
+    deleteVehicleUseCase
   );
   const vehicleHistoryController = new VehicleHistoryController(
     listVehicleLogUseCase
