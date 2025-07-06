@@ -20,6 +20,12 @@ export const createVehicleRoutes = (
   );
 
   router.get(
+    "/vehicles/status-summary",
+    guard.canActivate.bind(guard),
+    controller.getVehicleStatusSummary.bind(controller)
+  );
+
+  router.get(
     "/vehicles/:id",
     guard.canActivate.bind(guard),
     controller.detailVehicle.bind(controller)

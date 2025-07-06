@@ -2,6 +2,7 @@ import {
   FindAllVehiclesInput,
   FindAllVehiclesOutput,
   IVehicleRepository,
+  VehicleStatusSummary,
 } from "@/vehicles/application/repositories/vehicle.repository";
 import { Vehicle } from "@/vehicles/domain/entities/vehicle.entity";
 import { EntityManager } from "@mikro-orm/postgresql";
@@ -53,6 +54,30 @@ export class VehiclePgRepository implements IVehicleRepository {
     }
 
     return VehicleMapper.toDomain(vehicleSchema);
+  }
+
+  async getStatusSummary(data: {
+    ownerId: string;
+  }): Promise<VehicleStatusSummary> {
+    const [active, inactive, total] = await Promise.all([
+      this.entityManager.count(VehicleSchema, {
+        owner: data.ownerId,
+        active: true,
+      }),
+      this.entityManager.count(VehicleSchema, {
+        owner: data.ownerId,
+        active: false,
+      }),
+      this.entityManager.count(VehicleSchema, {
+        owner: data.ownerId,
+      }),
+    ]);
+
+    return {
+      total,
+      active,
+      inactive,
+    };
   }
 
   async update(vehicle: Vehicle): Promise<void> {

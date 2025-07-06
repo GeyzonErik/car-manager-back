@@ -21,12 +21,15 @@ import {
   ToggleActiveVehicleRequest,
 } from "../requests/toggle-active-vehicle.request";
 import { ToggleActiveVehiclePresenter } from "../presenter/toggle-vehicle.presenter";
+import { GetVehicleStatusSummaryUseCase } from "@/vehicles/application/usecases/get-vehicle-status-summary.usecase";
+import { GetVehicleStatusSummaryPresenter } from "../presenter/get-vehicle-status-summary.presenter";
 
 export class VehicleController {
   constructor(
     private readonly createVehicleUseCase: CreateVehicleUseCase,
     private readonly detailVehicleUseCase: DetailVehicleUseCase,
     private readonly listVehicleUseCase: ListVehicleUseCase,
+    private readonly getVehicleStatusSummaryUseCase: GetVehicleStatusSummaryUseCase,
     private readonly updateVehicleUseCase: UpdateVehicleUseCase,
     private readonly toggleActiveVehicleUseCase: ToggleActiveVehicleUseCase
   ) {}
@@ -88,6 +91,28 @@ export class VehicleController {
       });
 
       return res.status(200).json(DetailVehiclePresenter.toHTTP(vehicle));
+    } catch (err) {
+      if (err instanceof Error && err.name === "NotFoundError") {
+        return res.status(404).json({ message: err.message });
+      }
+
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async getVehicleStatusSummary(
+    req: UserAuthenticatedRequest<unknown, unknown, unknown>,
+    res: Response
+  ) {
+    try {
+      const summary = await this.getVehicleStatusSummaryUseCase.execute({
+        ownerId: req.user.id,
+      });
+
+      return res
+        .status(200)
+        .json(GetVehicleStatusSummaryPresenter.toHTTP(summary));
     } catch (err) {
       if (err instanceof Error && err.name === "NotFoundError") {
         return res.status(404).json({ message: err.message });

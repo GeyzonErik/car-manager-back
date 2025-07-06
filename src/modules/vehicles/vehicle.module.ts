@@ -13,6 +13,7 @@ import { UserPgRepository } from "@/users/data/mikro-orm/repositories/user.pg.re
 import { ToggleActiveVehicleUseCase } from "./application/usecases/toggle-vehicle-active.usecase";
 import { ListVehicleLogUseCase } from "./application/usecases/list-vehicle-log.usecase";
 import { VehicleHistoryController } from "./api/controllers/vehicle-history.controller";
+import { GetVehicleStatusSummaryUseCase } from "./application/usecases/get-vehicle-status-summary.usecase";
 
 export interface VehicleModuleDependencies {
   vehicleController: VehicleController;
@@ -36,6 +37,9 @@ export const createVehicleModule = (
   );
   const detailVehicleUseCase = new DetailVehicleUseCase(vehicleRepository);
   const listVehicleUseCase = new ListVehicleUseCase(vehicleRepository);
+  const getVehicleStatusSummaryUseCase = new GetVehicleStatusSummaryUseCase(
+    vehicleRepository
+  );
   const updateVehicleUseCase = new UpdateVehicleUseCase(
     userRepository,
     vehicleRepository,
@@ -53,6 +57,7 @@ export const createVehicleModule = (
     createVehicleUseCase,
     detailVehicleUseCase,
     listVehicleUseCase,
+    getVehicleStatusSummaryUseCase,
     updateVehicleUseCase,
     toggleActiveVehicleUseCase
   );
