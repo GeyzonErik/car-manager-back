@@ -8,12 +8,12 @@ export const createUserRoutes = (
   guard: AuthGuard
 ): Router => {
   router.get(
-    "/users/:id",
+    "/users",
     guard.canActivate.bind(guard),
     controller.detailUser.bind(controller)
   );
   router.patch(
-    "/users/:id",
+    "/users",
     guard.canActivate.bind(guard),
     controller.updateUser.bind(controller)
   );

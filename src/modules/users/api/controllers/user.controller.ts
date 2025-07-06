@@ -1,13 +1,10 @@
 import { DetailUserUseCase } from "@/users/application/usecases/detail-user.usecase";
-import { Request, Response } from "express";
+import { Response } from "express";
 import { DetailUserPresenter } from "../presenters/detail-user.presenter";
 import { UpdateUserUseCase } from "@/users/application/usecases/update-user.usecase";
-import { DetailUserParams } from "../requests/detail-user.request";
-import {
-  UpdateUserBody,
-  UpdateUserParams,
-} from "../requests/update-user.request";
+import { UpdateUserBody } from "../requests/update-user.request";
 import { UpdateUserPresenter } from "../presenters/update-user.presenter";
+import { UserAuthenticatedRequest } from "@/auth/api/types/user-authenticated-request.type";
 
 export class UserController {
   constructor(
@@ -15,13 +12,10 @@ export class UserController {
     private readonly updateUserUseCase: UpdateUserUseCase
   ) {}
 
-  async detailUser(
-    req: Request<DetailUserParams, unknown, unknown>,
-    res: Response
-  ) {
+  async detailUser(req: UserAuthenticatedRequest, res: Response) {
     try {
       const user = await this.detailUserUseCase.execute({
-        id: req.params.id,
+        id: req.user.id,
       });
 
       res.status(200).json(DetailUserPresenter.toHTTP(user));
@@ -35,12 +29,12 @@ export class UserController {
   }
 
   async updateUser(
-    req: Request<UpdateUserParams, unknown, UpdateUserBody>,
+    req: UserAuthenticatedRequest<unknown, unknown, UpdateUserBody>,
     res: Response
   ) {
     try {
       await this.updateUserUseCase.execute({
-        id: req.params.id,
+        id: req.user.id,
         name: req.body.name,
       });
 

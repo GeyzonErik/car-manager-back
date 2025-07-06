@@ -7,6 +7,8 @@ import { createAuthModule } from "@/auth/auth.module";
 import { createAuthRoutes } from "@/auth/api/routes/auth.routes";
 import { clearRoutes, logRoutes, wrapRouter } from "@common/loggers/log-routes";
 import * as cookieParser from "cookie-parser";
+import { createVehicleModule } from "@/vehicles/vehicle.module";
+import { createVehicleRoutes } from "@/vehicles/api/routes/vehicles.routes";
 
 const main = async () => {
   const orm = await MikroORM.init(mikroOrmConfig);
@@ -31,6 +33,14 @@ const main = async () => {
   const { userController } = createUserModule(em);
   const userRouter = createUserRoutes(apiRouter, userController, authGuard);
   app.use(userRouter);
+
+  const { vehicleController } = createVehicleModule(em);
+  const vehicleRouter = createVehicleRoutes(
+    apiRouter,
+    vehicleController,
+    authGuard
+  );
+  app.use(vehicleRouter);
 
   app.use("/api/v1", apiRouter);
 

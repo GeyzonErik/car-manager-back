@@ -1,8 +1,12 @@
+import { BadRequestError } from "@common/errors/bad-request.error";
+import { Plate } from "../value-objects/plate.vo";
+import { Model } from "../value-objects/model.vo";
+
 export class Vehicle {
   public readonly id: string;
   public readonly ownerId: string;
-  private _model: string;
-  private _plate: string;
+  private _model: Model;
+  private _plate: Plate;
   private _active: boolean;
   public readonly createdAt: Date;
   private _updatedAt: Date;
@@ -10,19 +14,19 @@ export class Vehicle {
   constructor(data: VehicleData) {
     this.id = data.id ?? crypto.randomUUID();
     this.ownerId = data.ownerId;
-    this._model = data.model;
-    this._plate = data.plate;
+    this._model = new Model(data.model);
+    this._plate = new Plate(data.plate);
     this._active = data.active ?? true;
     this.createdAt = data.createdAt ?? new Date();
     this._updatedAt = data.updatedAt ?? new Date();
   }
 
   public get model(): string {
-    return this._model;
+    return this._model.value;
   }
 
   public get plate(): string {
-    return this._plate;
+    return this._plate.value;
   }
 
   public get updatedAt(): Date {
@@ -37,15 +41,20 @@ export class Vehicle {
     if (!model || model.trim() === "") {
       throw new Error("Model cannot be empty");
     }
-    this._model = model;
+    this._model = new Model(model);
     this.touch();
   }
 
   public changePlate(plate: string): void {
     if (!plate || plate.trim() === "") {
-      throw new Error("Plate cannot be empty");
+      throw new BadRequestError("Plate cannot be empty");
     }
-    this._plate = plate;
+    this._plate = new Plate(plate);
+    this.touch();
+  }
+
+  public activate(): void {
+    this._active = true;
     this.touch();
   }
 

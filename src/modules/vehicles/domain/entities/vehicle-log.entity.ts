@@ -30,7 +30,7 @@ export interface VehicleHistoryData {
   id?: string;
   vehicleId: string;
   userId: string;
-  action: string;
+  action: "CREATED" | "UPDATED" | "DELETED" | "ACTIVATED" | "DEACTIVATED";
   description: string;
   createdAt: Date;
 }
