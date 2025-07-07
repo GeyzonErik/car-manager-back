@@ -1,3 +1,4 @@
+import "module-alias/register";
 import * as express from "express";
 import * as cors from "cors";
 import { MikroORM } from "@mikro-orm/core";

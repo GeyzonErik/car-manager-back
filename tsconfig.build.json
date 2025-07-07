@@ -13,20 +13,5 @@
     "target": "es2020",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@users/*": [
-        "src/modules/users/*"
-      ],
-      "@auth/*": [
-        "src/modules/auth/*"
-      ],
-      "@vehicles/*": [
-        "src/modules/vehicles/*"
-      ],
-      "@common/*": [
-        "src/common/*"
-      ]
-    }
   }
 }
