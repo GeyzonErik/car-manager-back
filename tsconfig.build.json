@@ -15,12 +15,18 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/modules/*"
+      "@users/*": [
+        "src/modules/users/*"
+      ],
+      "@auth/*": [
+        "src/modules/auth/*"
+      ],
+      "@vehicles/*": [
+        "src/modules/vehicles/*"
       ],
       "@common/*": [
         "src/common/*"
-      ],
+      ]
     }
   }
 }
