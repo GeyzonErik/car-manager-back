@@ -93,6 +93,33 @@ src/
 - PostgreSQL 12+
 - Yarn ou npm
 
+### ⚠️ Importante: Configuração de Aliases
+
+O projeto utiliza **module aliases** para facilitar as importações. Na linha 1 do `src/app.ts`:
+
+```typescript
+import "module-alias/register";
+```
+
+**O que faz:** Esta linha registra os aliases de módulos definidos no `package.json` (`_moduleAliases`), permitindo importações como:
+- `@/users/user.module` em vez de `../../users/user.module`
+- `@common/errors/bad-request.error` em vez de `../../common/errors/bad-request.error`
+
+**Problema em desenvolvimento:** Em alguns ambientes de desenvolvimento, especialmente com `ts-node-dev`, pode haver conflitos entre o `module-alias` e o TypeScript. Se você encontrar erros de importação, tente:
+
+1. **Remover temporariamente** a linha `import "module-alias/register";` do `src/app.ts`
+2. **Usar importações relativas** durante o desenvolvimento
+3. **Manter a linha** para produção (onde funciona perfeitamente)
+
+**Solução alternativa:** Se o problema persistir, você pode configurar o `ts-node-dev` para usar o `tsconfig-paths`:
+```bash
+yarn add -D tsconfig-paths
+```
+E modificar o script no `package.json`:
+```json
+"start:dev": "ts-node-dev --cls --respawn --require tsconfig-paths/register src/app.ts"
+```
+
 ### 1. Clone o repositório
 ```bash
 git clone https://github.com/GeyzonErik/epta-car-back.git
