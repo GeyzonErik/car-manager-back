@@ -39,7 +39,7 @@ export class AuthController {
       res
         .cookie("auth_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: true,
           sameSite: "none",
           maxAge: parseInt(process.env.JWT_EXPIRATION_TIME || "3600") * 1000,
         })
@@ -66,7 +66,7 @@ export class AuthController {
       res
         .clearCookie("auth_token", {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
+          secure: true,
           sameSite: "none",
         })
         .status(200)
