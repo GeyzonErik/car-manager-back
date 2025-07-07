@@ -1,3 +1,4 @@
+import { VehicleLogSchema } from "@/vehicles/data/mikro-orm/schemas/vehicle-log.schema";
 import { UserSchema } from "../modules/users/data/mikro-orm/schemas/user.schemas";
 import { VehicleSchema } from "../modules/vehicles/data/mikro-orm/schemas/vehicle.schema";
 import { defineConfig, PostgreSqlDriver } from "@mikro-orm/postgresql";
@@ -18,6 +19,6 @@ export default defineConfig({
       ssl: process.env.DB_SSL === "true",
     },
   },
-  entities: [UserSchema, VehicleSchema],
+  entities: [UserSchema, VehicleSchema, VehicleLogSchema],
   entitiesTs: ["./src/**/schemas/*.ts"],
 });
