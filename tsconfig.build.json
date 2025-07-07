@@ -5,5 +5,13 @@
     "test",
     "dist",
     "**/*spec.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "commonjs",
+    "target": "es2020",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
 }
