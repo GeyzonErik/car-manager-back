@@ -40,7 +40,7 @@ export class AuthController {
         .cookie("auth_token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          sameSite: "none",
           maxAge: parseInt(process.env.JWT_EXPIRATION_TIME || "3600") * 1000,
         })
         .status(200)
