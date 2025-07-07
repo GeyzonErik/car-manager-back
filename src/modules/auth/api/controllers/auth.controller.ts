@@ -67,7 +67,7 @@ export class AuthController {
         .clearCookie("auth_token", {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
+          sameSite: "none",
         })
         .status(200)
         .json({ message: "Successfully logged out" });
