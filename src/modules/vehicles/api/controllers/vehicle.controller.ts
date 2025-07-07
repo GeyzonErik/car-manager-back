@@ -24,7 +24,7 @@ import { ToggleActiveVehiclePresenter } from "../presenter/toggle-vehicle.presen
 import { GetVehicleStatusSummaryUseCase } from "@/vehicles/application/usecases/get-vehicle-status-summary.usecase";
 import { GetVehicleStatusSummaryPresenter } from "../presenter/get-vehicle-status-summary.presenter";
 import { DeleteVehicleUseCase } from "@/vehicles/application/usecases/delete-vehicle.usecase";
-import { DeleteVehicleParams } from "../requests/delete-vehucle.request";
+import { DeleteVehicleParams } from "../requests/delete-vehicle.request";
 import { DeleteVehiclePresenter } from "../presenter/delete-vehicle.presenter";
 
 export class VehicleController {
@@ -53,6 +53,12 @@ export class VehicleController {
     } catch (err) {
       if (err instanceof Error && err.name === "NotFoundError") {
         return res.status(404).json({ message: err.message });
+      }
+      if (
+        err instanceof Error &&
+        (err.name === "BadRequestError" || err.name === "InvalidModelError")
+      ) {
+        return res.status(400).json({ message: err.message });
       }
 
       console.error(err);

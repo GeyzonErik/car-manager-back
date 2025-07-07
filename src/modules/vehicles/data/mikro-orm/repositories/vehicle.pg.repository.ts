@@ -111,7 +111,7 @@ export class VehiclePgRepository implements IVehicleRepository {
       await em.nativeUpdate(
         VehicleSchema,
         { id: data.id },
-        { deletedAt: new Date() }
+        { active: false, deletedAt: new Date() }
       );
     });
   }

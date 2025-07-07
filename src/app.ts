@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as cors from "cors";
 import { MikroORM } from "@mikro-orm/core";
 import mikroOrmConfig from "../mikro-orm.config";
 import { createUserModule } from "@/users/user.module";
@@ -18,6 +19,12 @@ const main = async () => {
   const app = express();
   app.use(express.json());
   app.use(cookieParser());
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+    })
+  );
 
   clearRoutes();
 

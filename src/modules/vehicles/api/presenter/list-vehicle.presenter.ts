@@ -6,7 +6,7 @@ import {
 export class ListVehiclePresenter {
   static toHTTP(data: ListAllVehiclesUseCaseOutput) {
     return {
-      data: data.data.map((vehicle) => ({
+      vehicles: data.data.map((vehicle) => ({
         id: vehicle.id,
         model: vehicle.model,
         plate: vehicle.plate,

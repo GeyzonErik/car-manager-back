@@ -60,4 +60,20 @@ export class AuthController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  async logout(req: Request, res: Response) {
+    try {
+      res
+        .clearCookie("auth_token", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        })
+        .status(200)
+        .json({ message: "Successfully logged out" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

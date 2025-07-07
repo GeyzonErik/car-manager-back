@@ -51,7 +51,11 @@ export const createVehicleModule = (
     vehicleRepository,
     vehicleLogRepository
   );
-  const deleteVehicleUseCase = new DeleteVehicleUseCase(vehicleRepository);
+  const deleteVehicleUseCase = new DeleteVehicleUseCase(
+    userRepository,
+    vehicleRepository,
+    vehicleLogRepository
+  );
   const listVehicleLogUseCase = new ListVehicleLogUseCase(vehicleLogRepository);
 
   // Controllers
