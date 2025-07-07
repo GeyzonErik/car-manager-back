@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as cors from "cors";
 import { MikroORM } from "@mikro-orm/core";
-import mikroOrmConfig from "../mikro-orm.config";
+import mikroOrmConfig from "./config/mikro-orm.config";
 import { createUserModule } from "@/users/user.module";
 import { createUserRoutes } from "@/users/api/routes/user.routes";
 import { createAuthModule } from "@/auth/auth.module";

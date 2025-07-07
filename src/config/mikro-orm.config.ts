@@ -1,5 +1,5 @@
-import { UserSchema } from "./src/modules/users/data/mikro-orm/schemas/user.schemas";
-import { VehicleSchema } from "./src/modules/vehicles/data/mikro-orm/schemas/vehicle.schema";
+import { UserSchema } from "../modules/users/data/mikro-orm/schemas/user.schemas";
+import { VehicleSchema } from "../modules/vehicles/data/mikro-orm/schemas/vehicle.schema";
 import { defineConfig, PostgreSqlDriver } from "@mikro-orm/postgresql";
 import * as dotenv from "dotenv";
 
