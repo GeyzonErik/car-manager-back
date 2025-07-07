@@ -39,8 +39,8 @@ export class AuthController {
       res
         .cookie("auth_token", token, {
           httpOnly: true,
-          secure: true,
-          sameSite: "none",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
           maxAge: parseInt(process.env.JWT_EXPIRATION_TIME || "3600") * 1000,
         })
         .status(200)
@@ -66,8 +66,8 @@ export class AuthController {
       res
         .clearCookie("auth_token", {
           httpOnly: true,
-          secure: true,
-          sameSite: "none",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         })
         .status(200)
         .json({ message: "Successfully logged out" });
