@@ -1,4 +1,4 @@
-# 🚗 EPTA Car - Backend API
+# 🚗Car Manager - Backend API
 
 > Sistema de Gestão de Veículos - API REST
 
@@ -10,12 +10,12 @@
 
 ## 📋 Sobre o Projeto
 
-O **EPTA Car** é um sistema de gestão de veículos que permite o controle total da frota através de uma API REST robusta e uma interface web moderna.
+Sistema de gestão de veículos que permite o controle total da frota através de uma API REST robusta e uma interface web moderna.
 
 ### 🌐 Links do Projeto
 
-- **Frontend (Next.js)**: [GitHub Repository](https://github.com/GeyzonErik/epta-car-front)
-- **Aplicação Online**: [epta-car.vercel.app](https://epta-car.vercel.app/)
+- **Frontend (Next.js)**: [GitHub Repository](https://github.com/GeyzonErik/car-manager-front)
+- **Aplicação Online**: [car-manager.vercel.app](https://car-manager-front.vercel.app)
 - **Backend API**: Este repositório
 
 ## ✨ Funcionalidades Principais
@@ -122,8 +122,8 @@ E modificar o script no `package.json`:
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/GeyzonErik/epta-car-back.git
-cd epta-car-back
+git clone https://github.com/GeyzonErik/car-manager-back.git
+cd car-manager-back
 ```
 
 ### 2. Instale as dependências
@@ -142,7 +142,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=your_password
-DB_NAME=epta_car
+DB_NAME=car_manager
 
 # Application
 APP_PORT=3001
