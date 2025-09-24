@@ -20,8 +20,18 @@ export class AuthController {
 
       res.status(201).send(RegisterUserPresenter.toHTTP());
     } catch (err) {
-      if (err instanceof Error && err.name === "ConflictError") {
-        return res.status(409).json({ message: err.message });
+      if (err instanceof Error) {
+        switch (err.name) {
+          case "ConflictError":
+            return res.status(409).json({ message: err.message });
+
+          case "InvalidPasswordError":
+          case "InvalidPasswordFormatError":
+            return res.status(400).json({ message: err.message });
+
+          case "PasswordComparisonError":
+            return res.status(401).json({ message: err.message });
+        }
       }
 
       console.log(err);

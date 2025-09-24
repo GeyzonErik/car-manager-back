@@ -1,3 +1,4 @@
+import { InvalidPasswordError } from "../errors/invalid-password.error";
 import { Email } from "../value-objects/email.vo";
 import { Name } from "../value-objects/name.vo";
 import { Password } from "../value-objects/password.vo";
@@ -36,7 +37,7 @@ export class User {
 
   public withPassword(password: string): User {
     if (!Password.isValid(password)) {
-      throw new Error("Invalid password format");
+      throw new InvalidPasswordError();
     }
     this._password = new Password(password);
     this.touch();

@@ -6,7 +6,7 @@ export class Password {
 
   constructor(value: string) {
     if (!Password.isValid(value)) {
-      throw new InvalidPasswordError("Invalid password format");
+      throw new InvalidPasswordError();
     }
     this._value = bcrypt.hashSync(value, 10);
   }
