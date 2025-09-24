@@ -26,7 +26,7 @@ export class UserPgRepository implements IUserRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const userSchema = await this.entityManager.findOne(UserSchema, {
-      email: email,
+      email: { $ilike: email },
     });
 
     if (!userSchema) {
